@@ -1,40 +1,46 @@
-# 导入 app 目录下的 app.py 中的 dedupe_header 函数
-# 为了让 Python 找到 app 模块，项目根目录可能需要被添加到 PYTHONPATH
-# pytest 会自动处理这个问题，但为了代码清晰，我们假设它可被导入
-import sys
 import os
+import sys
 
-# 将项目根目录添加到 Python 路径中
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, PROJECT_ROOT)
 
-from app.app import dedupe_header, calculate_total_length # 导入新函数
+from app.app import calculate_total_length, dedupe_header  # noqa: E402
+
 
 def test_unique_columns():
-    """测试没有重复列的情况"""
-    assert dedupe_header(["id", "name", "age"]) == ["id", "name", "age"]
+    """测试所有列都唯一的情况"""
+    assert dedupe_header(["id", "name", "email"]) == ["id", "name", "email"]
+
 
 def test_all_duplicate_columns():
-    """测试所有列都重复的情况"""
-    assert dedupe_header(["id", "id", "id"]) == ["id", "id.1", "id.2"]
+    """测试所有列都相同的情况"""
+    assert dedupe_header(["a", "a", "a"]) == ["a", "a.1", "a.2"]
+
 
 def test_mixed_columns():
-    """测试混合重复和唯一列的情况"""
-    cols = ["id", "name", "id", "name", "name"]
-    expected = ["id", "name", "id.1", "name.1", "name.2"]
-    assert dedupe_header(cols) == expected
+    """测试混合唯一和重复列的情况"""
+    source = ["id", "name", "id", "value", "name", "id"]
+    expected = ["id", "name", "id.1", "value", "name.1", "id.2"]
+    assert dedupe_header(source) == expected
+
 
 def test_empty_list():
     """测试输入为空列表的情况"""
     assert dedupe_header([]) == []
 
+
 def test_with_trailing_duplicates():
-    """测试末尾有重复项的情况"""
-    assert dedupe_header(["a", "b", "c", "c", "c"]) == ["a", "b", "c", "c.1", "c.2"]
+    """测试重复项在末尾的情况"""
+    source = ["a", "b", "c", "c", "c"]
+    expected = ["a", "b", "c", "c.1", "c.2"]
+    assert dedupe_header(source) == expected
+
 
 def test_calculate_total_length_normal():
     """测试计算总长度的正常情况"""
     assert calculate_total_length(["id", "name", "email"]) == 11
 
+
 def test_calculate_total_length_empty():
     """测试计算总长度的空列表情况"""
-    assert calculate_total_length    
+    assert calculate_total_length
