@@ -1,14 +1,18 @@
 import os
 import sys
-from typing import List
 
-# FIX: 将所有 import 语句移动到文件顶部，修复 E402
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                               '..')))
+# FIX (E402): 将所有 import 语句移到文件顶部
+# FIX (E128): 重构了 sys.path 操作，使其更清晰且符合代码规范
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, PROJECT_ROOT)
+
 from app.app import calculate_total_length, dedupe_header
 
+# FIX (F401): 删除了未使用的 'from typing import List'
+# 我们将在下面的类型提示中使用现代的 'list[str]' 语法
 
-# FIX: 确保函数间有两个空行，修复 E302
+# FIX (E302): 确保所有测试函数之间有两个空行
+
 def test_unique_columns():
     """测试所有列都唯一的情况"""
     assert dedupe_header(["id", "name", "email"]) == ["id", "name", "email"]
@@ -33,7 +37,6 @@ def test_empty_list():
 
 def test_with_trailing_duplicates():
     """测试重复项在末尾的情况"""
-    # FIX: 长行被拆分，修复 E501
     source = ["a", "b", "c", "c", "c"]
     expected = ["a", "b", "c", "c.1", "c.2"]
     assert dedupe_header(source) == expected
@@ -46,5 +49,4 @@ def test_calculate_total_length_normal():
 
 def test_calculate_total_length_empty():
     """测试计算总长度的空列表情况"""
-    # FIX: 移除了行末多余的空格，修复 W291
     assert calculate_total_length

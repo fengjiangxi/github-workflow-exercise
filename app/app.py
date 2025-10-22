@@ -1,6 +1,7 @@
 from typing import List
 
-# FIX: 在函数定义前增加一个空行，满足 E302 (需要两个空行)
+
+# FIX: 再次确保函数定义前有两个空行
 def dedupe_header(columns: List[str]) -> List[str]:
     """
     通过向重复项附加数字后缀来使标题列名称唯一。
@@ -15,7 +16,6 @@ def dedupe_header(columns: List[str]) -> List[str]:
         ["id", "name", "id", "name", "name"] ->
         ["id", "name", "id.1", "name.1", "name.2"]
     """
-    # FIX: 长字符串被拆分成了多行，以满足 E501 (行长度限制)
     counts = {}
     new_columns = []
     for col in columns:
@@ -28,15 +28,14 @@ def dedupe_header(columns: List[str]) -> List[str]:
     return new_columns
 
 
-# FIX: 在函数定义前增加一个空行，满足 E302
 def calculate_total_length(columns: List[str]) -> int:
     """计算列表中所有字符串的总长度"""
     return sum(len(col) for col in columns)
 
 
-# FIX: 在 if __name__ 前增加一个空行，满足 E305
 if __name__ == "__main__":
     header = ["id", "name", "value", "id", "value", "name", "id"]
     new_header = dedupe_header(header)
     print(f"Original header: {header}")
     print(f"Deduplicated header: {new_header}")
+
