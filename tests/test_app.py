@@ -4,7 +4,7 @@ import sys
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, PROJECT_ROOT)
 
-from app.app import calculate_total_length, dedupe_header
+from app.app import calculate_total_length, dedupe_header  # noqa: E402
 
 
 def test_unique_columns():
