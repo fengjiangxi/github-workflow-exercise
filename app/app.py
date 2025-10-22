@@ -1,7 +1,6 @@
 from typing import List
 
 
-# FIX: 再次确保函数定义前有两个空行
 def dedupe_header(columns: List[str]) -> List[str]:
     """
     通过向重复项附加数字后缀来使标题列名称唯一。
@@ -38,4 +37,3 @@ if __name__ == "__main__":
     new_header = dedupe_header(header)
     print(f"Original header: {header}")
     print(f"Deduplicated header: {new_header}")
-

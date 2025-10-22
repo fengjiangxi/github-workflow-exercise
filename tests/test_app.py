@@ -1,17 +1,11 @@
 import os
 import sys
 
-# FIX (E402): 将所有 import 语句移到文件顶部
-# FIX (E128): 重构了 sys.path 操作，使其更清晰且符合代码规范
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, PROJECT_ROOT)
 
 from app.app import calculate_total_length, dedupe_header
 
-# FIX (F401): 删除了未使用的 'from typing import List'
-# 我们将在下面的类型提示中使用现代的 'list[str]' 语法
-
-# FIX (E302): 确保所有测试函数之间有两个空行
 
 def test_unique_columns():
     """测试所有列都唯一的情况"""
