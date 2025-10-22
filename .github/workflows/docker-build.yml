@@ -1,0 +1,31 @@
+# .github/workflows/docker-build.yml
+
+name: Docker Build Validation
+
+on:
+  push:
+    branches: [ "main", "staging", "dev" ]
+  pull_request:
+    branches: [ "main", "staging", "dev" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build the Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          tags: python-dedupe-app:latest-test
