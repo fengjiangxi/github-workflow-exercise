@@ -7,7 +7,7 @@ import os
 # 将项目根目录添加到 Python 路径中
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from app.app import dedupe_header
+from app.app import dedupe_header, calculate_total_length # 导入新函数
 
 def test_unique_columns():
     """测试没有重复列的情况"""
@@ -30,3 +30,11 @@ def test_empty_list():
 def test_with_trailing_duplicates():
     """测试末尾有重复项的情况"""
     assert dedupe_header(["a", "b", "c", "c", "c"]) == ["a", "b", "c", "c.1", "c.2"]
+
+def test_calculate_total_length_normal():
+    """测试计算总长度的正常情况"""
+    assert calculate_total_length(["id", "name", "email"]) == 11
+
+def test_calculate_total_length_empty():
+    """测试计算总长度的空列表情况"""
+    assert calculate_total_length    

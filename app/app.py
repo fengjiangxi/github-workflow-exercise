@@ -27,6 +27,10 @@ def dedupe_header(columns: List[str]) -> List[str]:
 
     return result
 
+def calculate_total_length(columns: List[str]) -> int:
+    """计算列表中所有字符串的总长度"""
+    return sum(len(col) for col in columns)
+
 # 主程序入口，方便直接运行查看效果
 if __name__ == "__main__":
     sample_columns = ["id", "name", "id", "name", "name", "email"]
